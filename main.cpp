@@ -24,8 +24,7 @@ int main() {
         int answer;
         input answer;
 
-        auto resourceBook = new BookResource();
-        auto book = resourceBook->load("GoT");
+        auto book = BookResource::load("GoT");
         book->toString();
 
         switch (answer) {

@@ -22,7 +22,8 @@ Book *BookResource::load(const std::string &title) {
     auto book = new Book();
 
     if (bookFile.is_open()) {
-        for (int i = 0; getline(bookFile, line); i++) {
+        int i = 0;
+        while (getline(bookFile, line)) {
             if (i == 0) {
                 book->setTitle(getValueFromLine(line));
             } else if (i == 1) {
@@ -30,7 +31,9 @@ Book *BookResource::load(const std::string &title) {
             } else {
                 book->setQuantity(std::stoi(getValueFromLine(line)));
             }
+            i++;
         }
+
         bookFile.close();
     }
 
@@ -38,6 +41,6 @@ Book *BookResource::load(const std::string &title) {
 }
 
 std::string BookResource::getValueFromLine(const std::string &line) {
-    std::string value = line.substr(line.find(':'));
+    std::string value = line.substr(line.find(':') + 2);
     return value;
 }

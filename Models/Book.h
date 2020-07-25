@@ -8,8 +8,8 @@
 
 
 class Book {
-    std::string title;
-    std::string author;
+    std::string title = "Na";
+    std::string author = "Na";
     int quantity = 0;
 
 public:
