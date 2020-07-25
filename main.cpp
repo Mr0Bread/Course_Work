@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Models/Book.h"
 #include "ResourceModels/BookResource.h"
+#include "Collection/BookCollection.h"
 
 #define print std::cout <<
 #define nl << std::endl
