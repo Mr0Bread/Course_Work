@@ -16,6 +16,32 @@ void Book::toString() {
     std::cout << "Quantity: " << this->quantity << std::endl;
 }
 
+Book::Book() = default;
+
 Book::Book(const std::string &title,
            const std::string &author) : author(author),
                                         title(title) {}
+
+const std::string &Book::getTitle() const {
+    return title;
+}
+
+void Book::setTitle(const std::string &title) {
+    Book::title = title;
+}
+
+const std::string &Book::getAuthor() const {
+    return author;
+}
+
+void Book::setAuthor(const std::string &author) {
+    Book::author = author;
+}
+
+int Book::getQuantity() const {
+    return quantity;
+}
+
+void Book::setQuantity(int quantity) {
+    Book::quantity = quantity;
+}

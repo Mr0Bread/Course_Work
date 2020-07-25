@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Models/Book.cpp"
-#include "ResourceModels/BookResource.cpp"
+#include "Models/Book.h"
+#include "ResourceModels/BookResource.h"
 
 #define print std::cout <<
 #define nl << std::endl
@@ -24,7 +24,8 @@ int main() {
         int answer;
         input answer;
 
-        auto book = new Book("GoT", "George Martin");
+        auto resourceBook = new BookResource();
+        auto book = resourceBook->load("GoT");
         book->toString();
 
         switch (answer) {
@@ -32,6 +33,16 @@ int main() {
                 print "All books";
                 break;
             case 2:
+                print "Add book(s)";
+                break;
+            case 3:
+                print "Remove book(s)";
+                break;
+            case 4:
+                print "Edit book(s)";
+                break;
+            case 5:
+                print "Exiting";
                 run = false;
                 break;
             default:
