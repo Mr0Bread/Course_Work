@@ -14,6 +14,28 @@ void BookResource::save(Book *book) {
              << "Author: " << book->getAuthor() << std::endl
              << "Quantity: " << book->getQuantity();
     bookFile.close();
+
+    std::ifstream readBookStorage("../Storage/bookStorage.txt");
+
+    if (readBookStorage.is_open()) {
+        std::string line;
+        bool appendName = false;
+
+        while (getline(readBookStorage, line)) {
+            if (line == title) {
+                break;
+            } else {
+                appendName = true;
+            }
+        }
+        readBookStorage.close();
+
+        if (appendName) {
+            std::ofstream writeBookStorage;
+            writeBookStorage.open("../Storage/bookStorage.txt");
+            writeBookStorage << title << std::endl;
+        }
+    }
 }
 
 Book *BookResource::load(const std::string &title) {

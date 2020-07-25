@@ -8,6 +8,8 @@
 
 
 class BookCollection {
+public:
+    Book* load();
 };
 
 #include "BookCollection.cpp"

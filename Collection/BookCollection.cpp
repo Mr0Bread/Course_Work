@@ -3,3 +3,7 @@
 //
 
 #include "BookCollection.h"
+
+Book *BookCollection::load() {
+
+}
