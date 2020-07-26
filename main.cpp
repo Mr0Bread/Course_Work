@@ -25,13 +25,8 @@ int main() {
         int answer;
         input answer;
 
-        auto book = BookResource::create("Hobbit", "Tolkien", 5);
-        BookResource::save(book);
-
-        book = BookResource::create("War And Piece", "Tolstoy", 500);
-        BookResource::save(book);
-
-//        auto bookCollection = BookCollection::load();
+        auto book = BookResource::load("Hobbit");
+        BookResource::remove(book->getTitle());
 
         switch (answer) {
             case 1:

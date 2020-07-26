@@ -4,7 +4,7 @@
 
 #include "BookResource.h"
 #include <fstream>
-#include <map>
+#include <cstring>
 
 void BookResource::save(Book *book) {
     std::ofstream bookFile;
@@ -46,7 +46,7 @@ void BookResource::save(Book *book) {
 Book *BookResource::load(const std::string &title) {
     std::ifstream bookFile("../Storage/" + title + ".txt");
     std::string line;
-    auto book = new Book();
+    auto book = create();
 
     if (bookFile.is_open()) {
         int i = 0;
@@ -60,10 +60,8 @@ Book *BookResource::load(const std::string &title) {
             }
             i++;
         }
-
         bookFile.close();
     }
-
     return book;
 }
 
@@ -74,4 +72,36 @@ std::string BookResource::getValueFromLine(const std::string &line) {
 
 Book *BookResource::create(const std::string &title, const std::string &author, int quantity) {
     return new Book(title, author, quantity);
+}
+
+void BookResource::remove(const std::string &title) {
+    std::string stringPath = "../Storage/" + title + ".txt";
+    char path[stringPath.length() + 1];
+    strcpy(path, stringPath.c_str());
+
+    std::remove(path);
+
+    deleteFromBookStorage(title);
+}
+
+void BookResource::deleteFromBookStorage(const std::string &title) {
+    std::ifstream readBookStorage("../Storage/bookStorage.txt");
+    std::ofstream writeTempBookStorage;
+    writeTempBookStorage.open("../Storage/tempBookStorage.txt", std::ios_base::app);
+
+    std::string line;
+    while (getline(readBookStorage, line)) {
+        if (line != title) {
+            writeTempBookStorage << line;
+        }
+    }
+    writeTempBookStorage.close();
+    readBookStorage.close();
+
+    refreshBookStorage();
+}
+
+void BookResource::refreshBookStorage() {
+    std::remove("../Storage/bookStorage.txt");
+    std::rename("../Storage/tempBookStorage.txt", "../Storage/bookStorage.txt");
 }

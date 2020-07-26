@@ -14,8 +14,12 @@ public:
 
     static Book* create(const std::string &title = "Na", const std::string &author = "Na", int quantity = 0);
 
+    static void remove(const std::string &title);
+
 private:
     static std::string getValueFromLine(const std::string &line);
+    static void deleteFromBookStorage(const std::string &title);
+    static void refreshBookStorage();
 };
 
 #include "BookResource.cpp"
