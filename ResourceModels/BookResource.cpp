@@ -6,6 +6,7 @@
 #include <fstream>
 #include <cstring>
 
+// Saves data about object in Storage/.txt
 void BookResource::save(Book *book) {
     std::ofstream bookFile;
     const std::string &title = book->getTitle();
@@ -43,6 +44,7 @@ void BookResource::save(Book *book) {
     }
 }
 
+// Creates object by loading .txt file from Storage folder by passed title
 Book *BookResource::load(const std::string &title) {
     std::ifstream bookFile("../Storage/" + title + ".txt");
     std::string line;
@@ -70,10 +72,12 @@ std::string BookResource::getValueFromLine(const std::string &line) {
     return value;
 }
 
+// Creates new Book object and returns pointer to it
 Book *BookResource::create(const std::string &title, const std::string &author, int quantity) {
     return new Book(title, author, quantity);
 }
 
+// Deletes relative .txt file from Storage and refreshes bookStorage.txt
 void BookResource::remove(const std::string &title) {
     std::string stringPath = "../Storage/" + title + ".txt";
     char path[stringPath.length() + 1];
@@ -92,7 +96,7 @@ void BookResource::deleteFromBookStorage(const std::string &title) {
     std::string line;
     while (getline(readBookStorage, line)) {
         if (line != title) {
-            writeTempBookStorage << line;
+            writeTempBookStorage << line << std::endl;
         }
     }
     writeTempBookStorage.close();

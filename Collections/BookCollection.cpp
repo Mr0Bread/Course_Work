@@ -4,18 +4,20 @@
 
 #include "BookCollection.h"
 #include <fstream>
+#include <vector>
 
-Book *BookCollection::load() {
+std::vector<Book*> BookCollection::load() {
     std::ifstream readBookStorage("../Storage/bookStorage.txt");
+
+    std::vector<Book*> books;
 
     if (readBookStorage.is_open()) {
         std::string line;
-        std::string titles;
-        int arraySize = 0;
         while (getline(readBookStorage, line)) {
-            titles.append(line + ",");
-            arraySize++;
+            books.push_back(BookResource::load(line));
         }
-        std::cout << titles;
+        readBookStorage.close();
     }
+
+    return books;
 }

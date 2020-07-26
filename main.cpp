@@ -2,10 +2,15 @@
 #include "Models/Book.h"
 #include "ResourceModels/BookResource.h"
 #include "Collections/BookCollection.h"
+#include "Asker.h"
 
 #define print std::cout <<
 #define nl << std::endl
 #define input std::cin >>
+
+void printAllBooks();
+
+void addNewBook();
 
 int main() {
     bool run = true;
@@ -25,15 +30,14 @@ int main() {
         int answer;
         input answer;
 
-        auto book = BookResource::load("Hobbit");
-        BookResource::remove(book->getTitle());
-
         switch (answer) {
             case 1:
-                print "All books";
+                print "All books: \n\n";
+                printAllBooks();
                 break;
             case 2:
-                print "Add book(s)";
+                print "Add book(s)\n\n";
+                addNewBook();
                 break;
             case 3:
                 print "Remove book(s)";
@@ -52,4 +56,21 @@ int main() {
     }
 
     return 0;
+}
+
+void addNewBook() {
+    std::string title = Asker::askString("Enter book's title");
+    std::string author = Asker::askString("Enter book's author");
+    int quantity = Asker::askInt("Enter quantity");
+
+    BookResource::save(BookResource::create(title, author, quantity));
+}
+
+void printAllBooks() {
+    auto books = BookCollection::load();
+
+    for (auto & book : books) {
+        book->toString();
+        print "\n";
+    }
 }
