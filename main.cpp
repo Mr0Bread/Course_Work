@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Models/Book.h"
 #include "ResourceModels/BookResource.h"
-#include "Collection/BookCollection.h"
+#include "Collections/BookCollection.h"
 
 #define print std::cout <<
 #define nl << std::endl
@@ -25,8 +25,13 @@ int main() {
         int answer;
         input answer;
 
-        auto book = BookResource::load("GoT");
-        book->toString();
+        auto book = BookResource::create("Hobbit", "Tolkien", 5);
+        BookResource::save(book);
+
+        book = BookResource::create("War And Piece", "Tolstoy", 500);
+        BookResource::save(book);
+
+//        auto bookCollection = BookCollection::load();
 
         switch (answer) {
             case 1:

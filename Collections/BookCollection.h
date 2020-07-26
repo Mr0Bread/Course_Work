@@ -9,7 +9,7 @@
 
 class BookCollection {
 public:
-    Book* load();
+    static Book* load();
 };
 
 #include "BookCollection.cpp"

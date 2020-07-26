@@ -19,21 +19,26 @@ void BookResource::save(Book *book) {
 
     if (readBookStorage.is_open()) {
         std::string line;
-        bool appendName = false;
+        bool appendTitle = true;
+        bool firstLine = true;
 
-        while (getline(readBookStorage, line)) {
-            if (line == title) {
+        do {
+            if (line.empty() and firstLine) {
+                appendTitle = true;
+                firstLine = false;
+            } else if (line == title){
+                appendTitle = false;
                 break;
-            } else {
-                appendName = true;
             }
-        }
+        } while (getline(readBookStorage, line));
+
         readBookStorage.close();
 
-        if (appendName) {
+        if (appendTitle) {
             std::ofstream writeBookStorage;
-            writeBookStorage.open("../Storage/bookStorage.txt");
+            writeBookStorage.open("../Storage/bookStorage.txt", std::ios_base::app);
             writeBookStorage << title << std::endl;
+            writeBookStorage.close();
         }
     }
 }
@@ -65,4 +70,8 @@ Book *BookResource::load(const std::string &title) {
 std::string BookResource::getValueFromLine(const std::string &line) {
     std::string value = line.substr(line.find(':') + 2);
     return value;
+}
+
+Book *BookResource::create(const std::string &title, const std::string &author, int quantity) {
+    return new Book(title, author, quantity);
 }

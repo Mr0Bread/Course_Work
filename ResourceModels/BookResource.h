@@ -8,9 +8,11 @@
 
 class BookResource {
 public:
-    void save(Book *book);
+    static void save(Book *book);
 
-    static Book *load(const std::string &title);
+    static Book* load(const std::string &title);
+
+    static Book* create(const std::string &title = "Na", const std::string &author = "Na", int quantity = 0);
 
 private:
     static std::string getValueFromLine(const std::string &line);
