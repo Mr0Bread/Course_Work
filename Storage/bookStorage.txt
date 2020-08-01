@@ -3,5 +3,4 @@ Hobbit
 LoTR
 451
 Gar vards
-var gar
 lo ki

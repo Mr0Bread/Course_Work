@@ -12,6 +12,8 @@ void printAllBooks();
 
 void addNewBook();
 
+void removeBook();
+
 int main() {
     bool run = true;
 
@@ -40,7 +42,8 @@ int main() {
                 addNewBook();
                 break;
             case 3:
-                print "Remove book(s)";
+                print "Remove book(s)\n\n";
+                removeBook();
                 break;
             case 4:
                 print "Edit book(s)";
@@ -56,6 +59,12 @@ int main() {
     }
 
     return 0;
+}
+
+void removeBook() {
+    Asker::clearInputBuffer();
+    std::string title = Asker::askString("Enter title of book you want to delete");
+    BookResource::remove(title);
 }
 
 void addNewBook() {
