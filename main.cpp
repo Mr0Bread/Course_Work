@@ -59,6 +59,7 @@ int main() {
 }
 
 void addNewBook() {
+    Asker::clearInputBuffer();
     std::string title = Asker::askString("Enter book's title");
     std::string author = Asker::askString("Enter book's author");
     int quantity = Asker::askInt("Enter quantity");

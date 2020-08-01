@@ -6,7 +6,7 @@
 #include <fstream>
 #include <cstring>
 
-// Saves data about object in Storage/.txt
+// Saves data about object in Storage/.txt and book's name in Storage/bookStorage.txt
 void BookResource::save(Book *book) {
     std::ofstream bookFile;
     const std::string &title = book->getTitle();

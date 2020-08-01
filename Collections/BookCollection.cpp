@@ -12,9 +12,9 @@ std::vector<Book*> BookCollection::load() {
     std::vector<Book*> books;
 
     if (readBookStorage.is_open()) {
-        std::string line;
-        while (getline(readBookStorage, line)) {
-            books.push_back(BookResource::load(line));
+        std::string title;
+        while (getline(readBookStorage, title)) {
+            books.push_back(BookResource::load(title));
         }
         readBookStorage.close();
     }
