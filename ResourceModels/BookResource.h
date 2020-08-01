@@ -19,7 +19,7 @@ public:
 private:
     static std::string getValueFromLine(const std::string &line);
     static void deleteFromBookStorage(const std::string &title);
-    static void refreshBookStorage();
+    static void replaceOldBookStorageWithNewOne();
 };
 
 #include "BookResource.cpp"

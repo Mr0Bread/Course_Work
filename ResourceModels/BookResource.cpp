@@ -67,11 +67,6 @@ Book *BookResource::load(const std::string &title) {
     return book;
 }
 
-std::string BookResource::getValueFromLine(const std::string &line) {
-    std::string value = line.substr(line.find(':') + 2);
-    return value;
-}
-
 // Creates new Book object and returns pointer to it
 Book *BookResource::create(const std::string &title, const std::string &author, int quantity) {
     return new Book(title, author, quantity);
@@ -88,6 +83,13 @@ void BookResource::remove(const std::string &title) {
     deleteFromBookStorage(title);
 }
 
+/* Utility methods */
+
+std::string BookResource::getValueFromLine(const std::string &line) {
+    std::string value = line.substr(line.find(':') + 2);
+    return value;
+}
+
 void BookResource::deleteFromBookStorage(const std::string &title) {
     std::ifstream readBookStorage("../Storage/bookStorage.txt");
     std::ofstream writeTempBookStorage;
@@ -102,10 +104,10 @@ void BookResource::deleteFromBookStorage(const std::string &title) {
     writeTempBookStorage.close();
     readBookStorage.close();
 
-    refreshBookStorage();
+    replaceOldBookStorageWithNewOne();
 }
 
-void BookResource::refreshBookStorage() {
+void BookResource::replaceOldBookStorageWithNewOne() {
     std::remove("../Storage/bookStorage.txt");
     std::rename("../Storage/tempBookStorage.txt", "../Storage/bookStorage.txt");
 }
