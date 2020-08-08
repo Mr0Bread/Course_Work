@@ -38,15 +38,15 @@ int main() {
                 printAllBooks();
                 break;
             case 2:
-                print "Add book(s)\n\n";
+                print "Add book\n\n";
                 addNewBook();
                 break;
             case 3:
-                print "Remove book(s)\n\n";
+                print "Remove book\n\n";
                 removeBook();
                 break;
             case 4:
-                print "Edit book(s)";
+                print "Edit book";
                 break;
             case 5:
                 print "Exiting";
