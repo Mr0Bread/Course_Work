@@ -83,6 +83,12 @@ void BookResource::remove(const std::string &title) {
     deleteFromBookStorage(title);
 }
 
+// Edits book's info
+void BookResource::edit(const std::string &title) {
+// TODO
+    auto book = load(title);
+}
+
 /* Utility methods */
 
 std::string BookResource::getValueFromLine(const std::string &line) {
@@ -110,4 +116,29 @@ void BookResource::deleteFromBookStorage(const std::string &title) {
 void BookResource::replaceOldBookStorageWithNewOne() {
     std::remove("../Storage/bookStorage.txt");
     std::rename("../Storage/tempBookStorage.txt", "../Storage/bookStorage.txt");
+}
+
+int BookResource::setNewTitle(const std::string &title, Book *book) {
+    std::ifstream readBookStorage("../Storage/bookStorage.txt");
+
+    if (readBookStorage.is_open()) {
+        std::string line;
+
+        while (getline(readBookStorage, line)) {
+            if (line == title) {
+                std::cout << "Cannot change title. Book with this title already exists\n";
+                return 0;
+            }
+        }
+
+        book->setTitle(title);
+        readBookStorage.close();
+
+        std::cout << "Title successfully updated\n";
+        return 1;
+    }
+}
+
+void BookResource::replaceOldBookFileWithNewOne(const std::string &title) {
+//    TODO
 }

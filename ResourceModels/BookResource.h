@@ -16,6 +16,12 @@ public:
 
     static void remove(const std::string &title);
 
+    static void edit(const std::string &title);
+
+    static int setNewTitle(const std::string &title, Book *book);
+
+    static void replaceOldBookFileWithNewOne(const std::string &title);
+
 private:
     static std::string getValueFromLine(const std::string &line);
     static void deleteFromBookStorage(const std::string &title);

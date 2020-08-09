@@ -14,6 +14,8 @@ void addNewBook();
 
 void removeBook();
 
+void editBook();
+
 int main() {
     bool run = true;
 
@@ -47,6 +49,7 @@ int main() {
                 break;
             case 4:
                 print "Edit book";
+                editBook();
                 break;
             case 5:
                 print "Exiting";
@@ -59,6 +62,42 @@ int main() {
     }
 
     return 0;
+}
+
+void editBook() {
+    Asker::clearInputBuffer();
+    std::string title = Asker::askString("Enter title of book which information you want to edit");
+    auto bookToEdit = BookResource::load(title);
+    auto oldTitle = bookToEdit->getTitle();
+    char options[2]{'y', 'n'};
+
+    if (Asker::askChar("Do you want to change title? y/n", options) == 'y') {
+        std::string newTitle = Asker::askString("Enter new title");
+        while (BookResource::setNewTitle(title, bookToEdit) == 0) {
+            if (Asker::askChar("Do you want to try another title? y/n", options) == 'n') {
+                break;
+            }
+        }
+    }
+
+    if (Asker::askChar("Do you want to change author? y/n", options) == 'y') {
+        std::string newAuthor = Asker::askString("Enter new author");
+        bookToEdit->setAuthor(newAuthor);
+    }
+
+    if (Asker::askChar("Do you want to change quantity? y/n", options) == 'y') {
+        int newQuantity = Asker::askInt("Enter new quantity");
+        bookToEdit->setQuantity(newQuantity);
+    }
+
+/* <---------------- TODO --------------------------------> */
+    BookResource::save(bookToEdit);
+
+    if (bookToEdit->getTitle() != oldTitle) {
+        BookResource::replaceOldBookFileWithNewOne(bookToEdit->getTitle());
+    }
+/* <------------------------------------------------------> */
+
 }
 
 void removeBook() {
@@ -79,7 +118,7 @@ void addNewBook() {
 void printAllBooks() {
     auto books = BookCollection::load();
 
-    for (auto & book : books) {
+    for (auto &book : books) {
         book->toString();
         print "\n";
     }

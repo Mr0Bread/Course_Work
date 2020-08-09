@@ -35,6 +35,18 @@ namespace Asker {
         return input;
     }
 
+    char askChar(const std::string &message, const char options[2]) {
+        std::cout << message << "\n> ";
+        char input;
+
+        while (!(std::cin >> input) and (input != options[0] or input != options[1])) {
+            clearInputBuffer();
+            std::cout << "Invalid input; please, re-enter.\n";
+        }
+
+        return input;
+    }
+
 }
 
 #endif //COURSE_WORK_ASKER_H
