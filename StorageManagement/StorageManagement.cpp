@@ -8,11 +8,15 @@
 void StorageManagement::initManagement() {
     std::string path = "../Models";
 
-    for (const auto & entry : std::filesystem::directory_iterator(path)) {
+    for (const auto& entry : std::filesystem::directory_iterator(path)) {
         std::string filePath = entry.path();
-        auto modelName = filePath.substr(10);
+        auto modelName = filePath.substr(filePath.rfind('/'));
 
         auto storageManager = new StorageManager(modelName);
-        StorageManagement::storeManagers.push_back(storageManager);
+        StorageManagement::storeManagers.insert(std::pair<std::string, StorageManager*>(modelName, storageManager));
     }
+}
+
+StorageManager* StorageManagement::getStoreManagerByModelName(const std::string& modelName) {
+    return StorageManagement::storeManagers.at(modelName);
 }

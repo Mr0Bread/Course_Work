@@ -5,15 +5,21 @@
 #include "BookResource.h"
 #include <fstream>
 #include <cstring>
+#include "../../StorageManagement/StorageManagement.h"
 
-BookResource::BookResource(const std::string &modelName) : modelName(modelName), AbstractResourceModel("id") {}
+BookResource::BookResource(
+        const std::vector<std::string>& fields, const std::string& modelName
+)
+        : fields(fields), modelName(modelName), AbstractResourceModel("id") {}
 
-// Saves data about object in Storage/.txt and book's name in Storage/bookStorage.txt
-void BookResource::save(AbstractModel *model) {
+void BookResource::save(AbstractModel* model) {
     std::ofstream bookFile;
     const Book* book = (Book*) model;
+    auto storeManager = StorageManagement::getStoreManagerByModelName(this->modelName);
 
-    const std::string &title = book->getTitle();
+
+
+    const std::string& title = book->getTitle();
     bookFile.open("../Storage/" + title + ".txt");
     bookFile << "Title: " << title << std::endl
              << "Author: " << book->getAuthor() << std::endl
@@ -49,7 +55,7 @@ void BookResource::save(AbstractModel *model) {
 }
 
 // Creates object by loading .txt file from Storage folder by passed title
-Book *BookResource::load(const std::string &title) {
+Book* BookResource::load(const std::string& title) {
     std::ifstream bookFile("../Storage/" + title + ".txt");
     std::string line;
     auto book = create();
@@ -72,12 +78,12 @@ Book *BookResource::load(const std::string &title) {
 }
 
 // Creates new Book object and returns pointer to it
-Book *BookResource::create(const std::string &title, const std::string &author, int quantity) {
+Book* BookResource::create(const std::string& title, const std::string& author, int quantity) {
     return new Book(title, author, quantity);
 }
 
 // Deletes relative .txt file from Storage and refreshes bookStorage.txt
-void BookResource::remove(const std::string &title) {
+void BookResource::remove(const std::string& title) {
     std::string stringPath = "../Storage/" + title + ".txt";
     char path[stringPath.length() + 1];
     strcpy(path, stringPath.c_str());
@@ -89,12 +95,12 @@ void BookResource::remove(const std::string &title) {
 
 /* Utility methods */
 
-std::string BookResource::getValueFromLine(const std::string &line) {
+std::string BookResource::getValueFromLine(const std::string& line) {
     std::string value = line.substr(line.find(':') + 2);
     return value;
 }
 
-void BookResource::deleteFromBookStorage(const std::string &title) {
+void BookResource::deleteFromBookStorage(const std::string& title) {
     std::ifstream readBookStorage("../Storage/bookStorage.txt");
     std::ofstream writeTempBookStorage;
     writeTempBookStorage.open("../Storage/tempBookStorage.txt", std::ios_base::app);

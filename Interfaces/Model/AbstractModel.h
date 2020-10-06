@@ -8,8 +8,9 @@
 
 class AbstractModel {
 protected:
-    int id;
+    int id = -1;
 
+public:
     int getId();
 
     void setId(int id);

@@ -12,6 +12,10 @@ public:
 
     void save(AbstractModel* model);
 
+    void updateModelFile();
+
+    void updateStorage();
+
 private:
     std::string modelToManage;
     std::string storagePath = "../Storage/";

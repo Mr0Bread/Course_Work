@@ -7,16 +7,19 @@
 #define COURSE_WORK_STORAGEMANAGEMENT_H
 
 #include <vector>
+#include <map>
 #include "../StorageManager/StorageManager.h"
 
 class StorageManagement {
 private:
     StorageManagement() = default;
 
-    static std::vector<StorageManager*> storeManagers;
+    static std::map<std::string, StorageManager*> storeManagers;
 
 public:
     static void initManagement();
+
+    static StorageManager* getStoreManagerByModelName(const std::string &modelName);
 };
 
 #include "StorageManagement.cpp"
