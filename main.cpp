@@ -1,8 +1,9 @@
 #include <iostream>
-#include "Models/Book.h"
-#include "ResourceModels/BookResource.h"
-#include "Collections/BookCollection.h"
+#include "Models/Book/Book.h"
+#include "ResourceModels/Book/BookResource.h"
+#include "Collections/Book/BookCollection.h"
 #include "Asker.h"
+#include "StorageManagement/StorageManagement.h"
 
 #define print std::cout <<
 #define nl << std::endl
@@ -16,6 +17,8 @@ void removeBook();
 
 int main() {
     bool run = true;
+
+    StorageManagement::initManagement();
 
     print "Welcome to library inventory system of company \"ABC\"" nl nl;
 

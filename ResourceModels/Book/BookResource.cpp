@@ -6,9 +6,13 @@
 #include <fstream>
 #include <cstring>
 
+BookResource::BookResource(const std::string &modelName) : modelName(modelName), AbstractResourceModel("id") {}
+
 // Saves data about object in Storage/.txt and book's name in Storage/bookStorage.txt
-void BookResource::save(Book *book) {
+void BookResource::save(AbstractModel *model) {
     std::ofstream bookFile;
+    const Book* book = (Book*) model;
+
     const std::string &title = book->getTitle();
     bookFile.open("../Storage/" + title + ".txt");
     bookFile << "Title: " << title << std::endl
@@ -27,7 +31,7 @@ void BookResource::save(Book *book) {
             if (line.empty() and firstLine) {
                 appendTitle = true;
                 firstLine = false;
-            } else if (line == title){
+            } else if (line == title) {
                 appendTitle = false;
                 break;
             }

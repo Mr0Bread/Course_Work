@@ -6,8 +6,9 @@
 #ifndef COURSE_WORK_BOOK_H
 #define COURSE_WORK_BOOK_H
 
+#include "../../Interfaces/Model/AbstractModel.h"
 
-class Book {
+class Book: public AbstractModel {
     std::string title = "Na";
     std::string author = "Na";
     int quantity = 0;
