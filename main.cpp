@@ -34,7 +34,6 @@ int main() {
 
         switch (answer) {
             case 1:
-                print "All books: \n\n";
                 printAllBooks();
                 break;
             case 2:
@@ -78,6 +77,13 @@ void addNewBook() {
 
 void printAllBooks() {
     auto books = BookCollection::load();
+
+    if (books.empty()) {
+        print "Storage is empty\n";
+        return;
+    }
+
+    print "All books: \n\n";
 
     for (auto & book : books) {
         book->toString();
