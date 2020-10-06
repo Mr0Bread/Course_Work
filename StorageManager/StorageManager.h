@@ -10,7 +10,7 @@ class StorageManager {
 public:
     StorageManager(const std::string &modelToManage);
 
-    void save(AbstractModel* model);
+    void save(AbstractModel* model, const std::vector<std::string>& fields, const std::string& data);
 
     void updateModelFile();
 

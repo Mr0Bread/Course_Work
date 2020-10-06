@@ -7,17 +7,13 @@
 #include <cstring>
 #include "../../StorageManagement/StorageManagement.h"
 
-BookResource::BookResource(
-        const std::vector<std::string>& fields, const std::string& modelName
-)
-        : fields(fields), modelName(modelName), AbstractResourceModel("id") {}
-
 void BookResource::save(AbstractModel* model) {
     std::ofstream bookFile;
     const Book* book = (Book*) model;
+    std::string data;
     auto storeManager = StorageManagement::getStoreManagerByModelName(this->modelName);
 
-
+    storeManager->save(model, this->fields, data);
 
     const std::string& title = book->getTitle();
     bookFile.open("../Storage/" + title + ".txt");

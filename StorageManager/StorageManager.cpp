@@ -4,9 +4,9 @@
 
 #include "StorageManager.h"
 
-StorageManager::StorageManager(const std::string &modelToManage) : modelToManage(modelToManage) {}
+StorageManager::StorageManager(const std::string& modelToManage) : modelToManage(modelToManage) {}
 
-void StorageManager::save(AbstractModel* model) {
+void StorageManager::save(AbstractModel* model, const std::vector<std::string>& fields, const std::string& data) {
     std::ofstream modelResourceFile;
     int id = model->getId();
 

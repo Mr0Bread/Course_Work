@@ -24,8 +24,13 @@ public:
     void remove(const std::string &identifier) override;
 
 public:
+    BookResource() : AbstractResourceModel("id") {
+        this->modelName = "Book";
 
-    explicit BookResource(const std::vector<std::string>& fields, const std::string &modelName = "Book");
+        this->fields.emplace_back("Title");
+        this->fields.emplace_back("Author");
+        this->fields.emplace_back("Quantity");
+    }
 
 private:
     std::string getValueFromLine(const std::string &line) override;

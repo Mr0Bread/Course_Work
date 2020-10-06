@@ -5,4 +5,8 @@
 #include <string>
 #include "AbstractResourceModel.h"
 
-AbstractResourceModel::AbstractResourceModel(const std::string &identifierField) : identifierField(identifierField) {}
+AbstractResourceModel::AbstractResourceModel(const std::string& identifierField) : identifierField(identifierField) {}
+
+const std::string& AbstractResourceModel::getIdentifierField() const {
+    return identifierField;
+}
