@@ -6,21 +6,20 @@
 #include <fstream>
 #include <cstring>
 #include "../../StorageManagement/StorageManagement.h"
+#include "../../Helpers/StringBuilder/StringBuilder.h"
 
 void BookResource::save(AbstractModel* model) {
     std::ofstream bookFile;
     const Book* book = (Book*) model;
     std::string data;
     auto storeManager = StorageManagement::getStoreManagerByModelName(this->modelName);
+    auto stringBuilder = new StringBuilder();
 
-    storeManager->save(model, this->fields, data);
+    stringBuilder->addLine("Title: " + book->getTitle());
+    stringBuilder->addLine("Author: " + book->getAuthor());
+    stringBuilder->addLine("Quantity: " + std::to_string(book->getQuantity()));
 
-    const std::string& title = book->getTitle();
-    bookFile.open("../Storage/" + title + ".txt");
-    bookFile << "Title: " << title << std::endl
-             << "Author: " << book->getAuthor() << std::endl
-             << "Quantity: " << book->getQuantity();
-    bookFile.close();
+    storeManager->save(model, stringBuilder->getString());
 
     std::ifstream readBookStorage("../Storage/bookStorage.txt");
 
@@ -73,11 +72,6 @@ Book* BookResource::load(const std::string& title) {
     return book;
 }
 
-// Creates new Book object and returns pointer to it
-Book* BookResource::create(const std::string& title, const std::string& author, int quantity) {
-    return new Book(title, author, quantity);
-}
-
 // Deletes relative .txt file from Storage and refreshes bookStorage.txt
 void BookResource::remove(const std::string& title) {
     std::string stringPath = "../Storage/" + title + ".txt";
@@ -116,4 +110,8 @@ void BookResource::deleteFromBookStorage(const std::string& title) {
 void BookResource::replaceOldBookStorageWithNewOne() {
     std::remove("../Storage/bookStorage.txt");
     std::rename("../Storage/tempBookStorage.txt", "../Storage/bookStorage.txt");
+}
+
+Book* BookResource::create() {
+    return new Book();
 }

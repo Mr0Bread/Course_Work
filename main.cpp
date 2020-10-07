@@ -75,8 +75,14 @@ void addNewBook() {
     std::string title = Asker::askString("Enter book's title");
     std::string author = Asker::askString("Enter book's author");
     int quantity = Asker::askInt("Enter quantity");
+    auto bookResource = new BookResource();
+    auto newBook = bookResource->create();
 
-    BookResource::save(BookResource::create(title, author, quantity));
+    newBook->setTitle(title);
+    newBook->setAuthor(author);
+    newBook->setQuantity(quantity);
+
+    bookResource->save(newBook);
 }
 
 void printAllBooks() {

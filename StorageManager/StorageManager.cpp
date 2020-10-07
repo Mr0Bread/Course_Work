@@ -3,21 +3,24 @@
 //
 
 #include "StorageManager.h"
+#include "../Helpers/StringBuilder/StringBuilder.h"
 
 StorageManager::StorageManager(const std::string& modelToManage) : modelToManage(modelToManage) {}
 
-void StorageManager::save(AbstractModel* model, const std::vector<std::string>& fields, const std::string& data) {
+void StorageManager::save(AbstractModel* model, const std::string& data) {
     std::ofstream modelResourceFile;
     int id = model->getId();
 
-    if (id == -1) {
-        modelResourceFile.open(this->storagePath + this->modelToManage + "/" + std::to_string(this->nextId) + ".txt");
+    std::string stringId = id == -1 ? std::to_string(this->nextId) : std::to_string(id);
 
-        modelResourceFile.close();
-        return;
+    auto stringBuilder = new StringBuilder(data);
+
+    modelResourceFile.open(this->storagePath + this->modelToManage + "/" + stringId + ".txt");
+
+    if (modelResourceFile.is_open()) {
+        stringBuilder->addLineToStart("ID: " + stringId);
+        modelResourceFile << stringBuilder->getString() << "\n\n";
     }
-
-    modelResourceFile.open(this->storagePath + this->modelToManage + "/" + std::to_string(id) + ".txt");
 
     modelResourceFile.close();
 }
