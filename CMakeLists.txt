@@ -3,4 +3,4 @@ project(Course_Work)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Course_Work main.cpp Asker.h)
+add_executable(Course_Work main.cpp)
